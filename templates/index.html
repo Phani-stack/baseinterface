@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BaseInterface</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+    --bg: #0d0f14;
+    --rail: #0a0c10;
+    --panel: #151821;
+    --panel2: #1b1f2b;
+    --line: #262b3a;
+    --text: #e9ebf2;
+    --mute: #8a90a2;
+    --lime: #c8ff3d;
+    --blue: #7aa2ff;
+    --violet: #b79bff;
+    --sans: 'Bricolage Grotesque', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+}
+
+button, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+.ic { width: 1em; height: 1em; display: block; }
+.i { display: inline-flex; font-size: 18px; }
+
+/* ---------- Rail ---------- */
+.rail {
+    width: 78px;
+    flex-shrink: 0;
+    background: var(--rail);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 0;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    background: var(--lime);
+    color: #10130a;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    margin-bottom: 18px;
+}
+
+.rail-btn {
+    width: 60px;
+    padding: 10px 0 8px;
+    border: 0;
+    border-radius: 12px;
+    background: none;
+    color: var(--mute);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: .02em;
+}
+
+.rail-btn .i { font-size: 21px; }
+.rail-btn:hover { color: var(--text); background: var(--panel); }
+.rail-btn.active { color: var(--lime); background: var(--panel); }
+.rail-spacer { flex: 1; }
+
+/* ---------- Main ---------- */
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+.topbar {
+    height: 64px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    border-bottom: 1px solid var(--line);
+}
+
+.top-title { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.top-sub { font-size: 12.5px; color: var(--mute); margin-top: 2px; }
+
+.view { display: none; flex: 1; min-height: 0; flex-direction: column; }
+.view.active { display: flex; }
+
+/* ---------- Chat ---------- */
+.chat { flex: 1; overflow-y: auto; padding: 40px 32px 20px; }
+.chat-inner { max-width: 860px; margin: auto; }
+
+.welcome { padding: 36px 0 10px; }
+
+h1 {
+    margin: 0 0 14px;
+    font-size: clamp(40px, 6vw, 68px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.035em;
+}
+
+h1 span { color: var(--lime); }
+
+.intro {
+    margin: 0 0 38px;
+    max-width: 460px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--mute);
+}
+
+.suggestions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.suggestion {
+    text-align: left;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color .15s, transform .15s;
+}
+
+.suggestion:hover { border-color: var(--lime); transform: translateY(-2px); }
+
+.suggestion .badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: var(--panel2);
+    color: var(--lime);
+    display: grid;
+    place-items: center;
+    font-size: 19px;
+}
+
+.suggestion strong { font-size: 15px; font-weight: 600; display: block; }
+.suggestion small { display: block; margin-top: 3px; font-size: 12.5px; color: var(--mute); }
+
+/* Messages */
+.message { display: flex; gap: 14px; margin: 0 0 30px; align-items: flex-start; }
+.message-content { min-width: 0; flex: 1; }
+.message-name { display: none; }
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    background: var(--lime);
+    color: #10130a;
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+}
+
+.message.user { justify-content: flex-end; }
+.message.user .avatar { display: none; }
+.message.user .message-content { flex: 0 1 auto; max-width: 78%; }
+
+.message.user .bubble {
+    padding: 12px 18px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: 18px 18px 4px 18px;
+    font-size: 15.5px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.bubble { overflow-wrap: anywhere; }
+
+.message.assistant .bubble.plain {
+    font-size: 15px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    color: #ff9a8a;
+}
+
+/* Rendered markdown */
+.md { font-size: 15px; line-height: 1.65; padding-top: 5px; }
+.md > *:first-child { margin-top: 0; }
+.md p { margin: 0 0 12px; }
+
+.md p > strong:only-child,
+.md h1, .md h2, .md h3 {
+    display: block;
+    margin: 2px 0 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: var(--lime);
+}
+
+.md ul, .md ol { margin: 0 0 12px; padding-left: 22px; }
+.md li { margin: 4px 0; }
+.md code {
+    font-family: var(--mono);
+    font-size: .88em;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: var(--panel2);
+}
+.md hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
+
+.tbl {
+    margin: 2px 0 18px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--panel);
+    overflow: hidden;
+}
+
+.tbl-scroll { overflow-x: auto; }
+
+.tbl table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    white-space: nowrap;
+}
+
+.tbl th {
+    padding: 12px 18px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--mute);
+    background: var(--panel2);
+    border-bottom: 1px solid var(--line);
+}
+
+.tbl td { padding: 11px 18px; border-bottom: 1px solid var(--line); }
+.tbl tbody tr:last-child td { border-bottom: 0; }
+.tbl td:first-child { color: var(--lime); }
+.tbl tbody tr:hover td { background: #ffffff08; }
+
+.tbl-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px;
+    border-top: 1px solid var(--line);
+    background: var(--panel2);
+    font-size: 12px;
+    color: var(--mute);
+}
+
+.copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    font-size: 12px;
+}
+
+.copy:hover { border-color: var(--lime); color: var(--lime); }
+
+.sub-title {
+    margin: 4px 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sub-title .i { color: var(--lime); font-size: 16px; }
+
+/* Typing */
+.typing { display: inline-flex; gap: 6px; padding: 12px 0; }
+
+.typing span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lime);
+    animation: blink 1s infinite;
+}
+
+.typing span:nth-child(2) { animation-delay: .15s; }
+.typing span:nth-child(3) { animation-delay: .3s; }
+
+@keyframes blink { 0%, 60%, 100% { opacity: .2; } 30% { opacity: 1; } }
+
+/* Composer */
+.composer-area { flex-shrink: 0; padding: 6px 32px 26px; }
+.composer-wrap { max-width: 860px; margin: auto; }
+
+.composer {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 10px 10px 10px 20px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    transition: border-color .15s;
+}
+
+.composer:focus-within { border-color: var(--lime); }
+
+#query {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    resize: none;
+    background: transparent;
+    font-size: 15px;
+    line-height: 24px;
+    max-height: 136px;
+    padding: 8px 0;
+}
+
+#query::placeholder { color: #666c7e; }
+
+.send {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 13px;
+    background: var(--lime);
+    color: #10130a;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+}
+
+.send:hover { filter: brightness(1.08); }
+.send:disabled { opacity: .4; cursor: wait; }
+
+/* ---------- Tables section ---------- */
+.tables-wrap { flex: 1; min-height: 0; padding: 28px 32px; display: flex; }
+
+.tables-inner {
+    flex: 1;
+    min-width: 0;
+    max-width: 1060px;
+    margin: auto;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 24px;
+}
+
+.pane {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.pane-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.pane-head .count {
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: var(--panel2);
+    color: var(--mute);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--panel2);
+    font-size: 12px;
+}
+
+.icon-btn:hover { border-color: var(--lime); color: var(--lime); }
+
+.t-list { overflow-y: auto; min-height: 0; padding: 10px; }
+
+.t-item {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    margin-bottom: 4px;
+    border: 0;
+    border-radius: 11px;
+    background: none;
+    text-align: left;
+    font-size: 14.5px;
+}
+
+.t-item .i { color: var(--mute); font-size: 17px; }
+.t-item .nm { flex: 1; font-weight: 500; }
+.t-item .n { font-family: var(--mono); font-size: 11.5px; color: var(--mute); }
+.t-item:hover { background: var(--panel2); }
+.t-item.active { background: var(--panel2); box-shadow: inset 3px 0 0 var(--lime); }
+.t-item.active .i { color: var(--lime); }
+
+.t-detail { overflow-y: auto; min-height: 0; padding: 26px 28px 30px; }
+
+.d-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.t-title {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: 1.1;
+}
+
+.t-meta { margin: 6px 0 20px; font-size: 13px; color: var(--mute); }
+
+.open-rows {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 11px;
+    background: var(--lime);
+    color: #10130a;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.open-rows:hover { filter: brightness(1.08); }
+
+.attr {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 6px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg);
+    flex-wrap: wrap;
+}
+
+.attr .lead { color: #4b5166; font-size: 16px; }
+.attr.pk .lead { color: var(--lime); }
+.attr.fk .lead { color: var(--blue); }
+.attr .nm { font-family: var(--mono); font-size: 13.5px; font-weight: 500; min-width: 120px; }
+.attr .type {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: var(--panel2);
+    color: var(--mute);
+}
+.attr .tags { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+
+.tag {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: var(--panel2);
+    color: var(--mute);
+}
+
+.tag.pk { background: #c8ff3d22; color: var(--lime); }
+.tag.fk { background: #7aa2ff22; color: var(--blue); }
+.tag.uq { background: #b79bff22; color: var(--violet); }
+
+.ref {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border: 1px solid #7aa2ff55;
+    border-radius: 6px;
+    background: none;
+    color: var(--blue);
+    font-family: var(--mono);
+    font-size: 11.5px;
+}
+
+.ref:hover { background: #7aa2ff22; }
+
+.state { padding: 22px 18px; font-size: 13.5px; color: var(--mute); }
+
+@media (max-width: 800px) {
+    body { flex-direction: column; }
+    .rail {
+        width: 100%;
+        height: 60px;
+        flex-direction: row;
+        justify-content: center;
+        padding: 0 10px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        order: -1;
+    }
+    .logo { width: 34px; height: 34px; font-size: 18px; margin: 0 10px 0 0; }
+    .rail-spacer { display: none; }
+    .rail-btn { width: auto; padding: 8px 14px; flex-direction: row; font-size: 13px; }
+    .topbar { padding: 0 16px; height: 56px; }
+    .chat { padding: 24px 16px 12px; }
+    .composer-area { padding: 6px 16px 16px; }
+    .suggestions { grid-template-columns: 1fr; }
+    .tables-wrap { padding: 16px; overflow-y: auto; }
+    .tables-inner { grid-template-columns: 1fr; height: auto; }
+    .t-list { max-height: 220px; }
+    .d-top { flex-direction: column; }
+}
+</style>
+</head>
+
+<body>
+<aside class="rail">
+    <div class="logo"><span class="i" data-icon="db"></span></div>
+    <button class="rail-btn active" id="nav-chat" onclick="showView('chat')">
+        <span class="i" data-icon="chat"></span>Ask
+    </button>
+    <button class="rail-btn" id="nav-tables" onclick="showView('tables')">
+        <span class="i" data-icon="table"></span>Tables
+    </button>
+    <div class="rail-spacer"></div>
+    <button class="rail-btn" onclick="newChat()">
+        <span class="i" data-icon="plus"></span>New
+    </button>
+</aside>
+
+<main class="main">
+    <header class="topbar">
+        <div>
+            <div class="top-title">BaseInterface</div>
+            <div class="top-sub" id="topSub">Ask your database in plain English</div>
+        </div>
+    </header>
+
+    <!-- Ask section -->
+    <div class="view active" id="view-chat">
+        <section class="chat" id="chat">
+            <div class="chat-inner" id="messages">
+                <div class="welcome" id="welcome">
+                    <h1>Ask your<br><span>database.</span></h1>
+                    <p class="intro">Type a question the way you would say it. BaseInterface writes the query and shows you the rows.</p>
+
+                    <div class="suggestions">
+                        <button class="suggestion" onclick="usePrompt('Show all customers')">
+                            <span class="badge"><span class="i" data-icon="users"></span></span>
+                            <span><strong>All customers</strong><small>See every customer record</small></span>
+                        </button>
+                        <button class="suggestion" onclick="usePrompt('Count all customers')">
+                            <span class="badge"><span class="i" data-icon="hash"></span></span>
+                            <span><strong>Count customers</strong><small>How many do we have</small></span>
+                        </button>
+                        <button class="suggestion" onclick="usePrompt('Show the latest orders')">
+                            <span class="badge"><span class="i" data-icon="bag"></span></span>
+                            <span><strong>Latest orders</strong><small>The most recent activity</small></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="composer-area">
+            <div class="composer-wrap">
+                <form class="composer" id="queryForm">
+                    <textarea id="query" rows="1"
+                        placeholder="Ask anything about your database"
+                        aria-label="Your database question"></textarea>
+                    <button class="send" id="send" type="submit" aria-label="Send query">
+                        <span class="i" data-icon="send"></span>
+                    </button>
+                </form>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Tables section -->
+    <div class="view" id="view-tables">
+        <section class="tables-wrap">
+            <div class="tables-inner">
+                <div class="pane">
+                    <div class="pane-head">
+                        <div>Tables<span class="count" id="tCount">0</span></div>
+                        <button class="icon-btn" onclick="loadSchema(true)">
+                            <span class="i" data-icon="refresh" style="font-size:14px"></span>Refresh
+                        </button>
+                    </div>
+                    <div class="t-list" id="tList"></div>
+                </div>
+                <div class="pane">
+                    <div class="t-detail" id="tDetail"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script>
+const form = document.getElementById("queryForm");
+const input = document.getElementById("query");
+const sendButton = document.getElementById("send");
+const messages = document.getElementById("messages");
+const chat = document.getElementById("chat");
+
+/* ================= Icons ================= */
+const ICONS = {
+    chat:   '<path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    table:  '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/>',
+    db:     '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>',
+    plus:   '<path d="M12 5v14M5 12h14"/>',
+    refresh:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>',
+    send:   '<path d="M12 19V5M5 12l7-7 7 7"/>',
+    arrow:  '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    copy:   '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+    check:  '<path d="M5 12l5 5 9-10"/>',
+    key:    '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>',
+    link:   '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+    users:  '<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7s7 3 7 7"/><path d="M17 4a4 4 0 0 1 0 8M22 21c0-3-2-5.5-5-6.5"/>',
+    hash:   '<path d="M5 9h15M4 15h15M10 3L8 21M16 3l-2 18"/>',
+    bag:    '<path d="M5 8h14l-1 13H6z"/><path d="M9 8a3 3 0 0 1 6 0"/>',
+    dot:    '<circle cx="12" cy="12" r="3"/>'
+};
+
+function icon(name) {
+    return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+        (ICONS[name] || "") + "</svg>";
+}
+
+function hydrateIcons(root) {
+    (root || document).querySelectorAll("[data-icon]").forEach(el => {
+        el.innerHTML = icon(el.dataset.icon);
+        el.removeAttribute("data-icon");
+    });
+}
+
+/* ================= Markdown + structured rendering ================= */
+function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function inline(s) {
+    return esc(s)
+        .replace(/`([^`]+)`/g, "<code>$1</code>")
+        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+        .replace(/(^|[\s(])\*([^*\s][^*]*)\*/g, "$1<em>$2</em>");
+}
+
+function splitRow(line) {
+    let t = line.trim();
+    if (t.startsWith("|")) t = t.slice(1);
+    if (t.endsWith("|")) t = t.slice(0, -1);
+    return t.split("|").map(c => c.trim());
+}
+
+const SEP = /^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$/;
+const LIST_RE = /^\s*([-*]|\d+[.)])\s+/;
+
+function tableHtml(head, rows) {
+    return '<div class="tbl"><div class="tbl-scroll"><table><thead><tr>' +
+        head.map(h => "<th>" + inline(h) + "</th>").join("") +
+        "</tr></thead><tbody>" +
+        rows.map(r => "<tr>" + head.map((_, k) => "<td>" + inline(r[k] ?? "") + "</td>").join("") + "</tr>").join("") +
+        '</tbody></table></div><div class="tbl-foot"><span>' + rows.length +
+        (rows.length === 1 ? " row" : " rows") +
+        '</span><button class="copy" type="button">' + icon("copy") + "<span>Copy CSV</span></button></div></div>";
+}
+
+function renderMd(src) {
+    const lines = String(src).replace(/\r/g, "").split("\n");
+    let out = "", i = 0;
+
+    while (i < lines.length) {
+        const line = lines[i];
+        if (!line.trim()) { i++; continue; }
+
+        if (line.includes("|") && i + 1 < lines.length && SEP.test(lines[i + 1]) && lines[i + 1].includes("-")) {
+            const head = splitRow(line);
+            i += 2;
+            const rows = [];
+            while (i < lines.length && lines[i].includes("|") && lines[i].trim()) {
+                rows.push(splitRow(lines[i]));
+                i++;
+            }
+            out += tableHtml(head, rows);
+            continue;
+        }
+
+        const h = line.match(/^(#{1,4})\s+(.*)$/);
+        if (h) { out += "<h3>" + inline(h[2]) + "</h3>"; i++; continue; }
+
+        if (/^\s*(-{3,}|\*{3,})\s*$/.test(line)) { out += "<hr>"; i++; continue; }
+
+        if (LIST_RE.test(line)) {
+            const ordered = /^\s*\d+[.)]\s+/.test(line);
+            let items = "";
+            while (i < lines.length && LIST_RE.test(lines[i])) {
+                items += "<li>" + inline(lines[i].replace(LIST_RE, "")) + "</li>";
+                i++;
+            }
+            out += (ordered ? "<ol>" : "<ul>") + items + (ordered ? "</ol>" : "</ul>");
+            continue;
+        }
+
+        const para = [];
+        while (i < lines.length && lines[i].trim() &&
+               !(lines[i].includes("|") && i + 1 < lines.length && SEP.test(lines[i + 1])) &&
+               !/^(#{1,4})\s+/.test(lines[i]) && !LIST_RE.test(lines[i])) {
+            para.push(lines[i]);
+            i++;
+        }
+        out += "<p>" + para.map(inline).join("<br>") + "</p>";
+    }
+    return out;
+}
+
+/* Python-style or JSON lists (like [{'a': 1, 'b': None}]) */
+function pyToJson(s) {
+    return s.replace(/\bNone\b/g, "null")
+            .replace(/\bTrue\b/g, "true")
+            .replace(/\bFalse\b/g, "false")
+            .replace(/'/g, '"');
+}
+
+function parseLoose(input) {
+    if (input && typeof input === "object") return input;
+    const s = String(input || "").trim();
+    if (!(s.startsWith("[") && s.endsWith("]")) && !(s.startsWith("{") && s.endsWith("}"))) return null;
+    try { return JSON.parse(s); } catch (e) {}
+    try { return JSON.parse(pyToJson(s)); } catch (e) {}
+    return null;
+}
+
+function cellText(v) {
+    if (v === null || v === undefined) return "null";
+    if (typeof v === "object") return JSON.stringify(v);
+    return String(v);
+}
+
+function renderResult(text) {
+    const data = parseLoose(text);
+
+    if (Array.isArray(data) && data.length &&
+        data.every(x => x && typeof x === "object" && !Array.isArray(x))) {
+
+        // schema-shaped result
+        if (data.every(x => Array.isArray(x.columns))) {
+            return data.map(t =>
+                '<div class="sub-title"><span class="i" data-icon="table"></span>' + esc(t.table_name || t.name || "table") + "</div>" +
+                tableHtml(["Attribute", "Type", "Key", "Nullable"],
+                    t.columns.map(c => [c.name, c.type, c.key || "", c.nullable === false ? "no" : "yes"]))
+            ).join("");
+        }
+
+        // plain list of rows
+        const keys = [];
+        data.forEach(r => Object.keys(r).forEach(k => { if (!keys.includes(k)) keys.push(k); }));
+        return tableHtml(keys, data.map(r => keys.map(k => cellText(r[k]))));
+    }
+    return renderMd(text);
+}
+
+// copy table as CSV
+messages.addEventListener("click", (e) => {
+    const btn = e.target.closest(".copy");
+    if (!btn) return;
+    const table = btn.closest(".tbl").querySelector("table");
+    const csv = [...table.rows].map(r =>
+        [...r.cells].map(c => '"' + c.textContent.replace(/"/g, '""') + '"').join(",")
+    ).join("\n");
+    navigator.clipboard.writeText(csv).then(() => {
+        const label = btn.querySelector("span");
+        label.textContent = "Copied";
+        setTimeout(() => (label.textContent = "Copy CSV"), 1200);
+    });
+});
+
+/* ================= Navigation ================= */
+function showView(name) {
+    document.getElementById("view-chat").classList.toggle("active", name === "chat");
+    document.getElementById("view-tables").classList.toggle("active", name === "tables");
+    document.getElementById("nav-chat").classList.toggle("active", name === "chat");
+    document.getElementById("nav-tables").classList.toggle("active", name === "tables");
+
+    document.getElementById("topSub").textContent =
+        name === "chat" ? "Ask your database in plain English" : "Tables and attributes in your database";
+
+    if (name === "chat") input.focus();
+    if (name === "tables" && !schemaLoaded) loadSchema();
+}
+
+function scrollToBottom() {
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function usePrompt(value) {
+    showView("chat");
+    input.value = value;
+    input.focus();
+    input.dispatchEvent(new Event("input"));
+    form.requestSubmit();
+}
+
+function newChat() {
+    // Reload the initial chat screen.
+    window.location.href = "/";
+}
+
+/* ================= Chat ================= */
+function addMessage(role, content) {
+    const wrapper = document.createElement("div");
+    wrapper.className = `message ${role}`;
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.innerHTML = icon("db");
+
+    const body = document.createElement("div");
+    body.className = "message-content";
+
+    const name = document.createElement("div");
+    name.className = "message-name";
+    name.textContent = role === "user" ? "You" : "BaseInterface";
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.textContent = content;
+
+    body.append(name, bubble);
+    wrapper.append(avatar, body);
+    messages.appendChild(wrapper);
+
+    scrollToBottom();
+    return wrapper;
+}
+
+function addTyping() {
+    const wrapper = addMessage("assistant", "");
+    const bubble = wrapper.querySelector(".bubble");
+    bubble.innerHTML =
+        '<div class="typing"><span></span><span></span><span></span></div>';
+    return wrapper;
+}
+
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const query = input.value.trim();
+    if (!query || sendButton.disabled) return;
+
+    const welcome = document.getElementById("welcome");
+    if (welcome) welcome.remove();
+
+    addMessage("user", query);
+
+    input.value = "";
+    input.style.height = "auto";
+    sendButton.disabled = true;
+    const typing = addTyping();
+
+    try {
+        const response = await fetch("/query", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "The request failed.");
+        }
+
+        const bubble = typing.querySelector(".bubble");
+        const text =
+            typeof data.result === "string"
+                ? data.result
+                : JSON.stringify(data.result, null, 2);
+        bubble.className = "bubble md";
+        bubble.innerHTML = renderResult(typeof data.result === "string" ? data.result : data.result);
+        hydrateIcons(bubble);
+
+    } catch (error) {
+        const bubble = typing.querySelector(".bubble");
+        bubble.className = "bubble plain";
+        bubble.textContent =
+            "Something went wrong: " + error.message +
+            "\n\nCheck that the FastAPI server is running and /query is working.";
+    } finally {
+        sendButton.disabled = false;
+        input.focus();
+        scrollToBottom();
+    }
+});
+
+input.addEventListener("input", () => {
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, 136) + "px";
+});
+
+input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        form.requestSubmit();
+    }
+});
+
+/* ================= Tables section =================
+   Reads the real schema:
+   1) GET /schema (optional endpoint)
+   2) otherwise asks your existing /query endpoint "Show all available tables"
+   Accepts: [{table_name, columns:[{name,type,nullable,key,extra}]}]
+   (JSON or Python-style text), or a markdown table as a fallback.
+===================================================== */
+let SCHEMA = {};
+let schemaLoaded = false;
+let activeTable = null;
+
+async function askDb(query) {
+    const res = await fetch("/query", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "The request failed.");
+    return data.result;
+}
+
+function normCol(c) {
+    if (typeof c === "string") return { name: c, type: "", nullable: true, key: null, extra: null };
+    return {
+        name: c.name || c.column_name || c.attribute || "",
+        type: c.type || c.data_type || "",
+        nullable: c.nullable !== false,
+        key: c.key || null,
+        extra: c.extra || null
+    };
+}
+
+function normalizeSchema(data) {
+    if (!data) return null;
+    const out = {};
+
+    if (Array.isArray(data)) {
+        data.forEach(t => {
+            if (t && (t.table_name || t.name) && Array.isArray(t.columns)) {
+                out[t.table_name || t.name] = t.columns.map(normCol);
+            }
+        });
+    } else if (typeof data === "object") {
+        Object.entries(data).forEach(([k, v]) => {
+            if (Array.isArray(v)) out[k] = v.map(normCol);
+        });
+    }
+    return Object.keys(out).length ? out : null;
+}
+
+function cleanCell(s) { return String(s ?? "").replace(/[`*]/g, "").trim(); }
+
+function schemaFromMarkdown(text) {
+    const lines = String(text).replace(/\r/g, "").split("\n");
+    for (let i = 0; i < lines.length - 1; i++) {
+        if (!(lines[i].includes("|") && SEP.test(lines[i + 1]))) continue;
+        const head = splitRow(lines[i]).map(cleanCell);
+        const rows = [];
+        let j = i + 2;
+        while (j < lines.length && lines[j].includes("|") && lines[j].trim()) {
+            rows.push(splitRow(lines[j]).map(cleanCell));
+            j++;
+        }
+        const find = re => head.findIndex(h => re.test(h));
+        const tIdx = find(/table/i), cIdx = find(/column|attribute|field/i), yIdx = find(/type/i);
+        const out = {};
+        let cur = "";
+        rows.forEach(r => {
+            cur = (tIdx >= 0 ? r[tIdx] : r[0]) || cur;
+            if (!cur) return;
+            out[cur] = out[cur] || [];
+            if (cIdx >= 0 && r[cIdx]) {
+                out[cur].push({ name: r[cIdx], type: yIdx >= 0 ? r[yIdx] : "", nullable: true, key: null, extra: null });
+            }
+        });
+        return Object.keys(out).length ? out : null;
+    }
+    return null;
+}
+
+async function loadSchema() {
+    const list = document.getElementById("tList");
+    const detail = document.getElementById("tDetail");
+    list.innerHTML = '<div class="state">Reading your database...</div>';
+    detail.innerHTML = "";
+    let raw = null;
+
+    try {
+        let schema = null;
+
+        try {
+            const res = await fetch("/schema");
+            if (res.ok) schema = normalizeSchema(await res.json());
+        } catch (e) { /* endpoint is optional */ }
+
+        if (!schema) {
+            raw = await askDb("Show all available tables");
+            schema = normalizeSchema(parseLoose(raw)) ||
+                     schemaFromMarkdown(typeof raw === "string" ? raw : JSON.stringify(raw));
+        }
+
+        SCHEMA = schema || {};
+        schemaLoaded = true;
+        activeTable = Object.keys(SCHEMA)[0] || null;
+        renderTables();
+
+        if (activeTable) {
+            selectTable(activeTable);
+        } else if (raw) {
+            detail.innerHTML = '<div class="md">' + renderResult(raw) + "</div>";
+            hydrateIcons(detail);
+        }
+    } catch (err) {
+        list.innerHTML = '<div class="state">Could not read tables: ' + esc(err.message) + "</div>";
+    }
+}
+
+function renderTables() {
+    const list = document.getElementById("tList");
+    const names = Object.keys(SCHEMA);
+    document.getElementById("tCount").textContent = names.length;
+
+    if (!names.length) {
+        list.innerHTML = '<div class="state">No tables found.</div>';
+        return;
+    }
+
+    list.innerHTML = "";
+    names.forEach(name => {
+        const b = document.createElement("button");
+        b.className = "t-item" + (name === activeTable ? " active" : "");
+        b.dataset.name = name;
+        b.innerHTML = '<span class="i" data-icon="table"></span><span class="nm"></span><span class="n"></span>';
+        b.querySelector(".nm").textContent = name;
+        b.querySelector(".n").textContent = SCHEMA[name].length;
+        b.onclick = () => selectTable(name);
+        list.appendChild(b);
+    });
+    hydrateIcons(list);
+}
+
+function findTarget(table, col) {
+    if (col.key === "PRI" || !/_id$/.test(col.name)) return null;
+    const base = col.name.replace(/_id$/, "");
+    for (const cand of [base, base + "s", base + "es"]) {
+        if (SCHEMA[cand] && cand !== table) return cand;
+    }
+    return null;
+}
+
+function selectTable(name) {
+    activeTable = name;
+    document.querySelectorAll(".t-item").forEach(b =>
+        b.classList.toggle("active", b.dataset.name === name));
+
+    const cols = SCHEMA[name] || [];
+    const detail = document.getElementById("tDetail");
+    detail.innerHTML = "";
+    detail.scrollTop = 0;
+
+    const top = document.createElement("div");
+    top.className = "d-top";
+    top.innerHTML = '<div><h2 class="t-title"></h2><div class="t-meta"></div></div>' +
+        '<button class="open-rows"><span>Show all rows</span><span class="i" data-icon="arrow"></span></button>';
+    top.querySelector(".t-title").textContent = name;
+    top.querySelector(".t-meta").textContent =
+        cols.length + (cols.length === 1 ? " attribute" : " attributes");
+    top.querySelector(".open-rows").onclick = () => usePrompt("Show all " + name);
+    detail.appendChild(top);
+
+    cols.forEach(c => {
+        const target = findTarget(name, c);
+        const isPk = c.key === "PRI";
+        const isFk = !isPk && !!target;
+
+        const row = document.createElement("div");
+        row.className = "attr" + (isPk ? " pk" : "") + (isFk ? " fk" : "");
+        row.innerHTML =
+            '<span class="i lead" data-icon="' + (isPk ? "key" : isFk ? "link" : "dot") + '"></span>' +
+            '<span class="nm"></span><span class="type"></span><span class="tags"></span>';
+        row.querySelector(".nm").textContent = c.name;
+        row.querySelector(".type").textContent = c.type || "unknown";
+
+        const tags = row.querySelector(".tags");
+        const addTag = (txt, cls) => {
+            const t = document.createElement("span");
+            t.className = "tag " + (cls || "");
+            t.textContent = txt;
+            tags.appendChild(t);
+        };
+
+        if (isPk) addTag("Primary", "pk");
+        if (c.key === "UNI") addTag("Unique", "uq");
+        if (c.nullable === false && !isPk) addTag("Required");
+        if (c.extra) addTag(String(c.extra).replace(/_/g, " "));
+
+        if (target) {
+            const r = document.createElement("button");
+            r.className = "ref";
+            r.innerHTML = icon("link") + "<span></span>";
+            r.querySelector("span").textContent = target;
+            r.title = "Open " + target;
+            r.onclick = () => selectTable(target);
+            tags.appendChild(r);
+        }
+
+        detail.appendChild(row);
+    });
+
+    hydrateIcons(detail);
+}
+
+hydrateIcons();
+</script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+[
+    {
+        "label": "runpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "runpy",
+        "description": "runpy",
+        "detail": "runpy",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "site",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "site",
+        "description": "site",
+        "detail": "site",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "ChatGroq",
+        "importPath": "langchain_groq",
+        "description": "langchain_groq",
+        "isExtraImport": true,
+        "detail": "langchain_groq",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "mysql.connector",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mysql.connector",
+        "description": "mysql.connector",
+        "detail": "mysql.connector",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "importPath": "model.state",
+        "description": "model.state",
+        "isExtraImport": true,
+        "detail": "model.state",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "importPath": "model.state",
+        "description": "model.state",
+        "isExtraImport": true,
+        "detail": "model.state",
+        "documentation": {}
+    },
+    {
+        "label": "choose_llm",
+        "importPath": "llm.llm",
+        "description": "llm.llm",
+        "isExtraImport": true,
+        "detail": "llm.llm",
+        "documentation": {}
+    },
+    {
+        "label": "choose_llm",
+        "importPath": "llm.llm",
+        "description": "llm.llm",
+        "isExtraImport": true,
+        "detail": "llm.llm",
+        "documentation": {}
+    },
+    {
+        "label": "tune_user_query",
+        "importPath": "nodes.nodes",
+        "description": "nodes.nodes",
+        "isExtraImport": true,
+        "detail": "nodes.nodes",
+        "documentation": {}
+    },
+    {
+        "label": "bin_dir",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "bin_dir = os.path.dirname(abs_file)\nbase = bin_dir[: -len(\"Scripts\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"foodybot\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "base = bin_dir[: -len(\"Scripts\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"foodybot\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"PATH\"]",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "os.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"foodybot\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV\"]",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"foodybot\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV_PROMPT\"]",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV_PROMPT\"] = \"foodybot\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "prev_length",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "prev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.path[:]",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.real_prefix",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "sys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.prefix",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "sys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "choose_llm",
+        "kind": 2,
+        "importPath": "llm.llm",
+        "description": "llm.llm",
+        "peekOfCode": "def choose_llm(level: str):\n    level = level.lower()\n    if (level == 'high'):\n        return ChatGroq(model=\"qwen/qwen3.8-27b\", temperature=0)\n    elif (level == 'low'):\n        return ChatGroq(model=\"openai/gpt-oss-20b\", temperature=0)\n    return None",
+        "detail": "llm.llm",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "kind": 6,
+        "importPath": "model.state",
+        "description": "model.state",
+        "peekOfCode": "class State(BaseModel):\n    original_user_query: str = Field(description=\"This is users message\")\n    tuned_user_query: str = Field(description=\"Tuned user query\")\n    database_context: str = Field(description=\"All database tables context and dummy data\")",
+        "detail": "model.state",
+        "documentation": {}
+    },
+    {
+        "label": "tune_user_query",
+        "kind": 2,
+        "importPath": "nodes.nodes",
+        "description": "nodes.nodes",
+        "peekOfCode": "def tune_user_query(state: State):\n    model = choose_llm(\"low\")\n    response = model.invoke(f\"convert this message into clear defined message and give me just output don't add any extra details futher it is prompted to the llm with some context: {state.original_user_query}\")\n    state.tuned_user_query = response.content\n    return state\ndef database_context(state: State):\nconfig = {\n    \"host\": \"localhost\",\n    \"user\": \"root\",\n    \"password\": \"your_password\",",
+        "detail": "nodes.nodes",
+        "documentation": {}
+    },
+    {
+        "label": "database_context",
+        "kind": 2,
+        "importPath": "nodes.nodes",
+        "description": "nodes.nodes",
+        "peekOfCode": "def database_context(state: State):\nconfig = {\n    \"host\": \"localhost\",\n    \"user\": \"root\",\n    \"password\": \"your_password\",\n    \"database\": \"foody\"\n}\nconn = mysql.connector.connect(**config)\ncursor = conn.cursor(dictionary=True)\n# Database information",
+        "detail": "nodes.nodes",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 5,
+        "importPath": "nodes.nodes",
+        "description": "nodes.nodes",
+        "peekOfCode": "config = {\n    \"host\": \"localhost\",\n    \"user\": \"root\",\n    \"password\": \"your_password\",\n    \"database\": \"foody\"\n}\nconn = mysql.connector.connect(**config)\ncursor = conn.cursor(dictionary=True)\n# Database information\ncursor.execute(\"SELECT DATABASE() AS database_name\")",
+        "detail": "nodes.nodes",
+        "documentation": {}
+    },
+    {
+        "label": "conn",
+        "kind": 5,
+        "importPath": "nodes.nodes",
+        "description": "nodes.nodes",
+        "peekOfCode": "conn = mysql.connector.connect(**config)\ncursor = conn.cursor(dictionary=True)\n# Database information\ncursor.execute(\"SELECT DATABASE() AS database_name\")\nprint(\"DATABASE:\", cursor.fetchone())\n# All tables\ncursor.execute(\"SHOW TABLES\")\ntables = [row[f\"Tables_in_{config['database']}\"] for row in cursor.fetchall()]\nfor table in tables:\n    print(\"\\n\" + \"=\" * 60)",
+        "detail": "nodes.nodes",
+        "documentation": {}
+    },
+    {
+        "label": "cursor",
+        "kind": 5,
+        "importPath": "nodes.nodes",
+        "description": "nodes.nodes",
+        "peekOfCode": "cursor = conn.cursor(dictionary=True)\n# Database information\ncursor.execute(\"SELECT DATABASE() AS database_name\")\nprint(\"DATABASE:\", cursor.fetchone())\n# All tables\ncursor.execute(\"SHOW TABLES\")\ntables = [row[f\"Tables_in_{config['database']}\"] for row in cursor.fetchall()]\nfor table in tables:\n    print(\"\\n\" + \"=\" * 60)\n    print(\"TABLE:\", table)",
+        "detail": "nodes.nodes",
+        "documentation": {}
+    },
+    {
+        "label": "tables",
+        "kind": 5,
+        "importPath": "nodes.nodes",
+        "description": "nodes.nodes",
+        "peekOfCode": "tables = [row[f\"Tables_in_{config['database']}\"] for row in cursor.fetchall()]\nfor table in tables:\n    print(\"\\n\" + \"=\" * 60)\n    print(\"TABLE:\", table)\n    # Column information\n    cursor.execute(f\"DESCRIBE `{table}`\")\n    columns = cursor.fetchall()\n    print(\"\\nCOLUMNS:\")\n    print(json.dumps(columns, indent=2, default=str))\n    # Total number of rows",
+        "detail": "nodes.nodes",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def main():\n    response = tune_user_query(State(\n        original_user_query= \"how many pending order status are there\",\n        sql_query=\"\",\n        tuned_user_query=\"\"\n    ))\n    print(response)\nif __name__ == \"__main__\":\n    main()",
+        "detail": "main",
+        "documentation": {}
+    }
+]
