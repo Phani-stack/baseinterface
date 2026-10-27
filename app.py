@@ -7,9 +7,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from nodes.nodes import get_schema
 
-api = FastAPI(title="QueryBite API")
+app = FastAPI(title="QueryBite API")
 
-api.add_middleware(
+app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
@@ -23,7 +23,7 @@ class QueryRequest(BaseModel):
 templates = Jinja2Templates(directory="templates")
 
 
-@api.get("/", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 
 def home(request: Request):
     return templates.TemplateResponse(
@@ -32,11 +32,11 @@ def home(request: Request):
         context={}
     )
 
-@api.post("/query")
+@app.post("/query")
 def query_database(request: QueryRequest):
     result = main(request.query)
     return {"result": result["result"]}
 
-@api.get("/schema")
+@app.get("/schema")
 def schema_endpoint():
     return get_schema()
