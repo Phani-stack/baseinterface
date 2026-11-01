@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Any
+from typing import Any, Optional
 
 class State(BaseModel):
     original_user_query: str
@@ -8,3 +8,7 @@ class State(BaseModel):
     sql_query: str = ""
     sql_data: Any = None
     result: str = ""
+    error: Optional[str] = None
+
+    class Config:
+        arbitrary_types_allowed = True
